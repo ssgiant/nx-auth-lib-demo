@@ -1,175 +1,251 @@
 {
-  "version": 1,
-  "projects": {
-    "nx-auth-lib": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "less"
-        }
-      },
-      "root": "apps/nx-auth-lib",
-      "sourceRoot": "apps/nx-auth-lib/src",
-      "prefix": "demo",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/nx-auth-lib",
-            "index": "apps/nx-auth-lib/src/index.html",
-            "main": "apps/nx-auth-lib/src/main.ts",
-            "polyfills": "apps/nx-auth-lib/src/polyfills.ts",
-            "tsConfig": "apps/nx-auth-lib/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/nx-auth-lib/src/favicon.ico",
-              "apps/nx-auth-lib/src/assets"
-            ],
-            "styles": ["apps/nx-auth-lib/src/styles.less"],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/nx-auth-lib/src/environments/environment.ts",
-                  "with": "apps/nx-auth-lib/src/environments/environment.prod.ts"
+    "version": 1,
+    "projects": {
+        "nx-auth-lib": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+            },
+            "root": "apps/nx-auth-lib",
+            "sourceRoot": "apps/nx-auth-lib/src",
+            "prefix": "demo",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/nx-auth-lib",
+                        "index": "apps/nx-auth-lib/src/index.html",
+                        "main": "apps/nx-auth-lib/src/main.ts",
+                        "polyfills": "apps/nx-auth-lib/src/polyfills.ts",
+                        "tsConfig": "apps/nx-auth-lib/tsconfig.app.json",
+                        "aot": true,
+                        "assets": ["apps/nx-auth-lib/src/favicon.ico", "apps/nx-auth-lib/src/assets"],
+                        "styles": ["apps/nx-auth-lib/src/styles.less"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/nx-auth-lib/src/environments/environment.ts",
+                                    "with": "apps/nx-auth-lib/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "nx-auth-lib:build",
+                        "proxyConfig": "apps/nx-auth-lib/proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "nx-auth-lib:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "nx-auth-lib:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/nx-auth-lib/tsconfig.app.json",
+                            "apps/nx-auth-lib/tsconfig.spec.json",
+                            "apps/nx-auth-lib/tsconfig.editor.json"
+                        ],
+                        "exclude": ["**/node_modules/**", "!apps/nx-auth-lib/**/*"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/nx-auth-lib/jest.config.js",
+                        "passWithNoTests": true
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "nx-auth-lib:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "nx-auth-lib:build:production"
+        "nx-auth-lib-e2e": {
+            "root": "apps/nx-auth-lib-e2e",
+            "sourceRoot": "apps/nx-auth-lib-e2e/src",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/cypress:cypress",
+                    "options": {
+                        "cypressConfig": "apps/nx-auth-lib-e2e/cypress.json",
+                        "tsConfig": "apps/nx-auth-lib-e2e/tsconfig.e2e.json",
+                        "devServerTarget": "nx-auth-lib:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "nx-auth-lib:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["apps/nx-auth-lib-e2e/tsconfig.e2e.json"],
+                        "exclude": ["**/node_modules/**", "!apps/nx-auth-lib-e2e/**/*"]
+                    }
+                }
             }
-          }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "nx-auth-lib:build"
-          }
+        "auth": {
+            "projectType": "library",
+            "root": "libs/auth",
+            "sourceRoot": "libs/auth/src",
+            "prefix": "demo",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["libs/auth/tsconfig.lib.json", "libs/auth/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**", "!libs/auth/**/*"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/auth/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/nx-auth-lib/tsconfig.app.json",
-              "apps/nx-auth-lib/tsconfig.spec.json",
-              "apps/nx-auth-lib/tsconfig.editor.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/nx-auth-lib/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/nx-auth-lib/jest.config.js",
-            "passWithNoTests": true
-          }
+        "demo-api": {
+            "root": "apps/demo-api",
+            "sourceRoot": "apps/demo-api/src",
+            "projectType": "application",
+            "prefix": "demo-api",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "options": {
+                        "outputPath": "dist/apps/demo-api",
+                        "main": "apps/demo-api/src/main.ts",
+                        "tsConfig": "apps/demo-api/tsconfig.app.json",
+                        "assets": ["apps/demo-api/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/demo-api/src/environments/environment.ts",
+                                    "with": "apps/demo-api/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "demo-api:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["apps/demo-api/tsconfig.app.json", "apps/demo-api/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**", "!apps/demo-api/**/*"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/demo-api/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
         }
-      }
     },
-    "nx-auth-lib-e2e": {
-      "root": "apps/nx-auth-lib-e2e",
-      "sourceRoot": "apps/nx-auth-lib-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/nx-auth-lib-e2e/cypress.json",
-            "tsConfig": "apps/nx-auth-lib-e2e/tsconfig.e2e.json",
-            "devServerTarget": "nx-auth-lib:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "nx-auth-lib:serve:production"
+    "cli": {
+        "defaultCollection": "@nrwl/angular",
+        "analytics": false
+    },
+    "schematics": {
+        "@nrwl/workspace": {
+            "library": {
+                "linter": "tslint"
             }
-          }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/nx-auth-lib-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/nx-auth-lib-e2e/**/*"]
-          }
+        "@nrwl/cypress": {
+            "cypress-project": {
+                "linter": "tslint"
+            }
+        },
+        "@nrwl/node": {
+            "application": {
+                "linter": "tslint"
+            },
+            "library": {
+                "linter": "tslint"
+            }
+        },
+        "@nrwl/nest": {
+            "application": {
+                "linter": "tslint"
+            },
+            "library": {
+                "linter": "tslint"
+            }
+        },
+        "@nrwl/express": {
+            "application": {
+                "linter": "tslint"
+            },
+            "library": {
+                "linter": "tslint"
+            }
+        },
+        "@nrwl/angular:application": {
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/angular:library": {
+            "unitTestRunner": "jest"
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "analytics": false
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "tslint"
-      }
     },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "nx-auth-lib"
+    "defaultProject": "nx-auth-lib"
 }

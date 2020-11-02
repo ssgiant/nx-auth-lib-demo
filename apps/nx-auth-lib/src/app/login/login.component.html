@@ -1,0 +1,13 @@
+<!-- Sample login form from: https://codepen.io/colorlib/pen/rxddKy -->
+<div class="login-page">
+    <div class="form">
+        <div class="form-title">Login</div>
+        <form #loginForm="ngForm" class="login-form">
+            <input type="text" ngModel name="username" #username="ngModel" placeholder="username" required />
+            <input type="password" ngModel name="password" #password="ngModel" placeholder="password" required />
+            <button id="doLoginBtn" (click)="doLogin($event)">login</button>
+            <p *ngIf="loginForm.dirty && !loginForm.valid" class="message error">Please enter username and password</p>
+            <p *ngIf="loginError" class="message error">Invalid username or password</p>
+        </form>
+    </div>
+</div>

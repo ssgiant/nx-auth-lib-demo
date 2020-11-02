@@ -1,34 +1,43 @@
 {
-  "npmScope": "demo",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": "demo",
+    "affected": {
+        "defaultBase": "master"
     },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
-    }
-  },
-  "projects": {
-    "nx-auth-lib": {
-      "tags": []
+    "implicitDependencies": {
+        "angular.json": "*",
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        "tsconfig.base.json": "*",
+        "tslint.json": "*",
+        ".eslintrc.json": "*",
+        "nx.json": "*"
     },
-    "nx-auth-lib-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-auth-lib"]
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/nx-cloud",
+            "options": {
+                "accessToken": "ODY3OGViYjYtN2EzZC00ZjYwLTkxOWMtNmNhOWMyZmVhYmY0fHJlYWQtd3JpdGU=",
+                "cacheableOperations": ["build", "test", "lint", "e2e"],
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true
+            }
+        }
+    },
+    "projects": {
+        "nx-auth-lib": {
+            "tags": []
+        },
+        "nx-auth-lib-e2e": {
+            "tags": [],
+            "implicitDependencies": ["nx-auth-lib"]
+        },
+        "auth": {
+            "tags": []
+        },
+        "demo-api": {
+            "tags": []
+        }
     }
-  }
 }
