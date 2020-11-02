@@ -1,3 +1,12 @@
+# Running the code
+
+Run `npm i` followed by `npm run start:all` to run both the frontend and backend locally.
+
+
+
+
+
+
 # Demo
 
 This project was generated using [Nx](https://nx.dev).
